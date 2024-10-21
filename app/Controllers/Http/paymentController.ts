@@ -2,11 +2,11 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import ePayco from 'epayco-sdk-node'
 import { DateTime } from 'luxon'
 import Payment from 'App/Models/Payment'
-
+import Env from '@ioc:Adonis/Core/Env'
 
 // Configuración de ePayco
-const apiKey = "492cae83f3e37cb372ba40eceaf573a0"
-const privateKey = "4bded72f7845230ab56f8a6ba3c708e1"
+const apiKey = Env.get("EPAYCO_PUBLIC_KEY") 
+const privateKey = Env.get("EPAYCO_PRIVATE_KEY") 
 const language = "ES"
 const test = true
 

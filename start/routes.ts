@@ -24,7 +24,4 @@ Route.get('/', async () => {
   return { hello: 'world' }
 })
 
-Route.post('/api/user', 'PaymentController.createUser');
-Route.post('/api/payment', 'PaymentController.createPayment');
-
 import './routes/payment'
