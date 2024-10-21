@@ -25,6 +25,7 @@
     "@adonisjs/repl": "^3.1.11",
     "epayco-sdk-node": "^1.4.0",
     "luxon": "^3.5.0",
+    "ms-cinema": "file:",
     "mysql2": "^3.11.3",
     "proxy-addr": "^2.0.7",
     "reflect-metadata": "^0.2.2",
