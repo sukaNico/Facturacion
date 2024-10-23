@@ -3,6 +3,7 @@ import ePayco from 'epayco-sdk-node'
 import { DateTime } from 'luxon'
 import Payment from 'App/Models/Payment'
 import Env from '@ioc:Adonis/Core/Env'
+import axios from 'axios'
 
 // Configuración de ePayco
 const apiKey = Env.get("EPAYCO_PUBLIC_KEY") 
@@ -164,23 +165,32 @@ export default class PaymentController {
     throw new Error('La fecha es inválida');
   }
   
-  paymentRecord.fecha = parsedDate
+    paymentRecord.fecha = parsedDate
 
-  paymentRecord.franquicia = paymentData.franquicia
-  paymentRecord.ip = paymentData.ip
-  paymentRecord.enpruebas = paymentData.enpruebas
-  paymentRecord.tipoDoc = paymentData.tipo_doc
-  paymentRecord.documento = paymentData.documento
-  paymentRecord.nombres = paymentData.nombres
-  paymentRecord.apellidos = paymentData.apellidos
-  paymentRecord.email = paymentData.email
-  paymentRecord.ciudad = paymentData.ciudad
-  paymentRecord.direccion = paymentData.direccion
-  paymentRecord.indPais = paymentData.ind_pais
+    paymentRecord.franquicia = paymentData.franquicia
+    paymentRecord.ip = paymentData.ip
+    paymentRecord.enpruebas = paymentData.enpruebas
+    paymentRecord.tipoDoc = paymentData.tipo_doc
+    paymentRecord.documento = paymentData.documento
+    paymentRecord.nombres = paymentData.nombres
+    paymentRecord.apellidos = paymentData.apellidos
+    paymentRecord.email = paymentData.email
+    paymentRecord.ciudad = paymentData.ciudad
+    paymentRecord.direccion = paymentData.direccion
+    paymentRecord.indPais = paymentData.ind_pais
 
-  // Guardar el registro en la base de datos
-  await paymentRecord.save()
+    // Guardar el registro en la base de datos
+    await paymentRecord.save()
 
+    const externalApiUrl = 'http://127.0.0.1:5000/send-email'
+    const postResponse = await axios.post(externalApiUrl, {
+      "subject": "Factura",
+      "recipient": "nicolaslol151@gmail.com",
+      "content": paymentResponse.data
+    })
+
+    console.log('Respuesta de la API externa:', postResponse.data)
+    
       return response.status(200).json(paymentResponse) // Respuesta final
     } catch (error) {
       return response.status(500).json({ error: "Error al guardar el pago: " + error.message })
