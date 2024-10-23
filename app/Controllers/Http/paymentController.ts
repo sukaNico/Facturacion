@@ -185,7 +185,7 @@ export default class PaymentController {
     const externalApiUrl = 'http://127.0.0.1:5000/send-email'
     const postResponse = await axios.post(externalApiUrl, {
       "subject": "Factura",
-      "recipient": "nicolaslol151@gmail.com",
+      "recipient": paymentResponse.data.email,
       "content": paymentResponse.data
     })
 
